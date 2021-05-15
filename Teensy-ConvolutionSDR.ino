@@ -203,6 +203,8 @@
 #define HARDWARE_DB2OO 1
 //DB2OO, 21.2.21: Set this if the CLK1 output of SI5351 needs to be used (e.g. Elektor SDR). Otherwise CLK2 will be used
 #define HARDWARE_DB2OO_CLK1 1
+//Use CLK1 but use the frequency of the 25MHz crystal in the blue Teensy SDR BOX
+#define HARDWARE_DB2OO_CLK1_NON_ELEKTOR 1
 //DB2OO, 16.2.21: use the encodersa.h code taken from the simpla SA code, to be independent of Github code, that might disappear like EncoderBounce
 //#define USE_ENCODER_SA
 #define ENCODER_USE_INTERRUPTS
@@ -898,8 +900,14 @@ time_t getTeensy3Time()
 //DB2OO, 17.8.20: SI5351 on MSOP 10 adapter, 25MHz crystal
 #define Si_5351_crystal 25003238
 #elif defined(HARDWARE_DB2OO_CLK1)
+
+#ifdef HARDWARE_DB2OO_CLK1_NON_ELEKTOR
+//DB2OO, 17.8.20: SI5351 on MSOP 10 adapter, 25MHz crystal
+#define Si_5351_crystal 25003238
+#else
 //DB2OO, 22.2.21: SI5351 on second Elektor SDR board: has 24.9955MHz with Si_5351_crystal 25003238
 #define Si_5351_crystal 24998737
+#endif
 
 #else
 #define Si_5351_crystal 27000000
